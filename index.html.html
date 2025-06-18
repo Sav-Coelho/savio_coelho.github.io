@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sávio Coelho - Cientista de Dados</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Cyberpunk Grid Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(255, 0, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px, 50px 50px, 200px 200px, 200px 200px;
+            z-index: -3;
+            animation: gridPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Digital Rain Effect */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="10" y="20" font-family="monospace" font-size="3" fill="rgba(0,255,255,0.3)">01</text><text x="30" y="40" font-family="monospace" font-size="2" fill="rgba(0,255,255,0.2)">11</text><text x="60" y="15" font-family="monospace" font-size="2.5" fill="rgba(255,0,255,0.25)">10</text><text x="80" y="70" font-family="monospace" font-size="2" fill="rgba(0,255,255,0.3)">01</text><text x="20" y="80" font-family="monospace" font-size="3" fill="rgba(255,0,255,0.2)">11</text><text x="70" y="45" font-family="monospace" font-size="2" fill="rgba(0,255,255,0.25)">10</text><text x="45" y="65" font-family="monospace" font-size="2.5" fill="rgba(255,0,255,0.3)">01</text><text x="15" y="50" font-family="monospace" font-size="2" fill="rgba(0,255,255,0.2)">11</text></svg>');
+            z-index: -2;
+            animation: digitalRain 15s linear infinite;
+        }
+
+        @keyframes digitalRain {
+            0% { transform: translateY(-100px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        /* Cyberpunk Accent Lines */
+        .cyberpunk-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .cyberpunk-lines::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #00ffff 50%, transparent 100%);
+            animation: scanLine 6s ease-in-out infinite;
+        }
+
+        .cyberpunk-lines::after {
+            content: '';
+            position: absolute;
+            top: 70%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #ff00ff 50%, transparent 100%);
+            animation: scanLine 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes scanLine {
+            0%, 100% { opacity: 0.2; transform: scaleX(0.5); }
+            50% { opacity: 0.8; transform: scaleX(1); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 255, 255, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ffff;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            font-family: 'Courier New', monospace;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cyberpunk Data Stream Effect */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><linearGradient id="cyber1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:rgba(0,255,255,0.6);stop-opacity:0"/><stop offset="50%" style="stop-color:rgba(0,255,255,0.3);stop-opacity:1"/><stop offset="100%" style="stop-color:rgba(0,255,255,0.6);stop-opacity:0"/></linearGradient></defs><rect x="10" y="30" width="80" height="2" fill="url(%23cyber1)"/><rect x="120" y="60" width="60" height="1" fill="rgba(255,0,255,0.4)"/><rect x="40" y="120" width="100" height="1.5" fill="rgba(0,255,255,0.3)"/><circle cx="180" cy="40" r="3" fill="rgba(0,255,255,0.5)"/><circle cx="30" cy="160" r="2" fill="rgba(255,0,255,0.4)"/><polygon points="160,100 170,105 160,110" fill="rgba(0,255,255,0.4)"/></svg>');
+            animation: dataStream 12s linear infinite;
+            opacity: 0.8;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><circle cx="50" cy="50" r="20" fill="none" stroke="rgba(0,255,255,0.2)" stroke-width="1"/><circle cx="250" cy="100" r="15" fill="none" stroke="rgba(255,0,255,0.25)" stroke-width="1"/><circle cx="150" cy="200" r="25" fill="none" stroke="rgba(0,255,255,0.15)" stroke-width="1"/><path d="M 100 100 Q 150 50 200 100" stroke="rgba(255,0,255,0.3)" stroke-width="2" fill="none"/><path d="M 50 200 Q 150 150 250 200" stroke="rgba(0,255,255,0.25)" stroke-width="1.5" fill="none"/></svg>');
+            animation: dataStream 18s linear infinite reverse;
+            opacity: 0.6;
+        }
+
+        @keyframes dataStream {
+            0% { 
+                transform: translateX(-100px) translateY(0px); 
+                opacity: 0;
+            }
+            10% { 
+                opacity: 0.8;
+            }
+            90% { 
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translateX(100vw) translateY(-50px); 
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideUp 1s ease 0.3s forwards;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+            font-family: 'Courier New', monospace;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #00ffff;
+            opacity: 0;
+            animation: slideUp 1s ease 0.6s forwards;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0;
+            animation: slideUp 1s ease 0.9s forwards;
+            color: #e0e0e0;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            color: #000;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            opacity: 0;
+            animation: slideUp 1s ease 1.2s forwards;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.5);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        section:nth-child(even) {
+            background: rgba(10, 10, 30, 0.9);
+            border-top: 1px solid rgba(255, 0, 255, 0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #ffffff;
+            position: relative;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+
+        .section-title::after {
+            content: '';
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-content p {
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: #000;
+            margin: 0 auto;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.5);
+            border: 3px solid rgba(0, 255, 255, 0.3);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-card {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+            border-color: rgba(0, 255, 255, 0.5);
+        }
+
+        .skill-card i {
+            font-size: 3rem;
+            color: #00ffff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+        }
+
+        .skill-card h3 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .skill-card p {
+            color: #b0b0b0;
+        }card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-card i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e9ecef;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #764ba2;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">Sávio Coelho</a>
+            <ul class="nav-links">
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#skills">Habilidades</a></li>
+                <li><a href="#projects">Projetos</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Sávio Coelho</h1>
+            <p class="subtitle">Cientista de Dados</p>
+            <p>Transformando dados em insights valiosos através de análise avançada, machine learning e inteligência artificial. Especialista em descobrir padrões ocultos que impulsionam decisões estratégicas.</p>
+            <a href="#contact" class="cta-button">Vamos Conversar</a>
+        </div>
+    </section>
+
+    <section id="about" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Sobre Mim</h2>
+            <div class="about-content">
+                <div class="profile-image">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <p>Sou um cientista de dados apaixonado por descobrir insights valiosos em dados complexos. Com experiência em análise estatística, machine learning e visualização de dados, ajudo empresas a tomar decisões baseadas em evidências.</p>
+                    <br>
+                    <p>Minha jornada inclui projetos desafiadores em diferentes setores, sempre focando em entregar soluções práticas e impactantes. Acredito que os dados têm o poder de transformar negócios e melhorar vidas.</p>
+                    <br>
+                    <p>Estou sempre em busca de novos desafios e oportunidades para aplicar técnicas avançadas de ciência de dados em problemas reais.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Habilidades</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <i class="fab fa-python"></i>
+                    <h3>Python & R</h3>
+                    <p>Desenvolvimento avançado em Python e R para análise de dados, incluindo pandas, NumPy, scikit-learn e tidyverse.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Machine Learning</h3>
+                    <p>Algoritmos de ML supervisionado e não supervisionado, deep learning com TensorFlow e PyTorch.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Visualização</h3>
+                    <p>Criação de dashboards interativos com Tableau, Power BI, Plotly e bibliotecas de visualização.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Big Data</h3>
+                    <p>Processamento de grandes volumes de dados com SQL, Apache Spark, Hadoop e ferramentas cloud.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-cloud"></i>
+                    <h3>Cloud Computing</h3>
+                    <p>Deploy de modelos em AWS, Azure e Google Cloud Platform, com experiência em MLOps.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Estatística</h3>
+                    <p>Análise estatística avançada, testes de hipótese, modelagem preditiva e análise experimental.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Projetos</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Análise Preditiva de Vendas</h3>
+                        <p>Desenvolvimento de modelo de machine learning para previsão de vendas com 92% de precisão, resultando em otimização de estoque e aumento de 15% na receita.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Scikit-learn</span>
+                            <span class="tag">Time Series</span>
+                            <span class="tag">Tableau</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Segmentação de Clientes</h3>
+                        <p>Implementação de algoritmos de clustering para identificar perfis de clientes, permitindo campanhas de marketing personalizadas com ROI 40% superior.</p>
+                        <div class="project-tags">
+                            <span class="tag">R</span>
+                            <span class="tag">K-means</span>
+                            <span class="tag">Power BI</span>
+                            <span class="tag">SQL</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Sistema de Recomendação</h3>
+                        <p>Criação de sistema de recomendação usando deep learning para plataforma e-commerce, aumentando engajamento em 35% e conversões em 25%.</p>
+                        <div class="project-tags">
+                            <span class="tag">TensorFlow</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">AWS</span>
+                            <span class="tag">Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="fade-in">
+        <div class="container">
+            <h2 class="section-title">Vamos Conversar</h2>
+            <div class="contact-content">
+                <p>Estou sempre aberto a discutir novos projetos, oportunidades de colaboração ou apenas trocar ideias sobre ciência de dados. Entre em contato!</p>
+                <div class="contact-links">
+                    <a href="https://www.linkedin.com/in/sávio-coelho-ba5b31193/" target="_blank" class="contact-link">
+                        <i class="fab fa-linkedin"></i>
+                        LinkedIn
+                    </a>
+                    <a href="https://github.com" target="_blank" class="contact-link">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                    <a href="mailto:saviocoelho@email.com" class="contact-link">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </a>
+                    <a href="https://wa.me/5585999999999" target="_blank" class="contact-link">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sávio Coelho. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(20px)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.1)';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+    </script>
+</body>
+</html>

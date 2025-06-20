@@ -22,7 +22,7 @@
               position: relative;
               overflow-x: hidden;
          }
-        /* Cyberpunk Grid Background */
+        
         body::before {
             content: '';
             position: fixed;
@@ -45,7 +45,7 @@
             50% { opacity: 0.6; }
         }
 
-        /* Digital Rain Effect */
+        
         body::after {
             content: '';
             position: fixed;
@@ -65,7 +65,7 @@
             100% { transform: translateY(100vh); opacity: 0; }
         }
 
-        /* Cyberpunk Accent Lines */
+        
         .cyberpunk-lines {
             position: fixed;
             top: 0;
@@ -109,7 +109,7 @@
             padding: 0 20px;
         }
 
-        /* Header */
+        
         header {
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
@@ -173,7 +173,7 @@
             width: 100%;
         }
 
-        /* Hero Section */
+        
         .hero {
             min-height: 100vh;
             display: flex;
@@ -185,7 +185,7 @@
             overflow: hidden;
         }
 
-        /* Cyberpunk Data Stream Effect */
+        
         .hero::before {
             content: '';
             position: absolute;
@@ -313,7 +313,7 @@
             text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
         }
 
-        /* Sections */
+        
         section {
             padding: 5rem 0;
             background: rgba(0, 0, 0, 0.8);
@@ -348,7 +348,7 @@
             box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
         }
 
-        /* About Section */
+        
         .about-content {
             display: grid;
             grid-template-columns: 1fr 2fr;
@@ -376,7 +376,7 @@
             border: 3px solid rgba(0, 255, 255, 0.3);
         }
 
-        /* Skills Section */
+        
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -435,7 +435,7 @@
             margin-bottom: 1rem;
         }
 
-        /* Projects Section */
+        
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -484,7 +484,7 @@
             color: #666;
         }
 
-        /* Contact Section */
+        
         .contact-content {
             text-align: center;
             max-width: 600px;
@@ -512,7 +512,7 @@
             color: #764ba2;
         }
 
-        /* Footer */
+        
         footer {
             background: #333;
             color: white;
@@ -520,7 +520,7 @@
             padding: 2rem 0;
         }
 
-        /* Responsive */
+        
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -541,7 +541,7 @@
             }
         }
 
-        /* Scroll Animation */
+        
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
@@ -709,7 +709,7 @@
     </footer>
 
     <script>
-        // Smooth scrolling
+        
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -719,7 +719,7 @@
             });
         });
 
-        // Scroll animations
+        
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -737,7 +737,7 @@
             observer.observe(el);
         });
 
-        // Header background on scroll
+        
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 100) {
